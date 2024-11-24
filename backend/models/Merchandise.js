@@ -27,10 +27,10 @@ const MerchandiseSchema = new mongoose.Schema({
         default: 0, 
         min: 0, 
     },
-    seller: {
-        type: mongoose.Schema.Types.ObjectId, // Reference to the User model
+    user: {  // Reference to the User model
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'User', // Assuming you have a User model
-        
+        required: true
     },
     createdAt: {
         type: Date,

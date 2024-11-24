@@ -10,17 +10,23 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:3001/users';
+  private apiUrl = 'http://localhost:3001/api/users';
 
   constructor(
     private http: HttpClient,
     private cookieService: CookieService
   ) { }
 
-  registerUser(userData: any): Observable<any> {
-    return this.http.post(`http://localhost:3001/api/users/register`, userData, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
+  getCurrentUser(): User | null {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return JSON.parse(localStorage.getItem('currentUser') || '{}');
+    }
+    return null;
+  }
+
+  
+  registerUser(userData: FormData): Observable<any> {
+    return this.http.post(`http://localhost:3001/api/users/register`, userData).pipe(
       catchError(this.handleError)
     );
   }
@@ -80,13 +86,13 @@ export class AuthenticationService {
     console.error('API error occurred:', error);
     return throwError('An error occurred; please try again.');
   }
-  getUserRole(): string {
+  /*getUserRole(): string {
     return this.cookieService.get('role'); // Lire le rôle depuis un cookie
   }
 
   isAdmin(): boolean {
     return this.getUserRole() === 'admin';
-  }
+  }*/
 }
 
 

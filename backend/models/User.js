@@ -1,10 +1,14 @@
 const mongoose= require('mongoose');
 //defenir le shéma utilisateur 
 const UserSchema = new mongoose.Schema({
-    username:{
+    firstname:{
     type: String,
     required: true,
-    unique: true
+   },
+lastname:{
+    type: String,
+    required: true,
+    
 },
 email:{
     type: String,
@@ -14,15 +18,10 @@ email:{
 },
 password:{
     type: String,
-    require:true,//le mot de passe est requis 
+    required:true,//le mot de passe est requis 
 
 },
-role:{
-    type: String,
-    enum: ['buyer', 'seller', 'admin'],
-    default: ['buyer']
 
-},
 wishlist: {
     type: [String], // Array of item IDs
     default: [], // Initialize wishlist as an empty array
@@ -30,7 +29,7 @@ wishlist: {
 cart: [{
     item_id: {
         type: String, // ID of the item
-        required: true, // Item ID is required
+        // Item ID is required
     },
     quantity: {
         type: Number,
@@ -38,6 +37,14 @@ cart: [{
         min: 1, // Minimum quantity allowed is 1
     },
 }],
+phoneNumber: {
+    type: String,
+    required: true,  // Phone number is required
+  },
+  profilePicture: {
+    type: String,  // File path for profile picture
+    default: null,  // Default to null if no picture uploaded
+  }
 });
 //creer un model base sur ce schema 
 const User= mongoose.model('User',UserSchema);

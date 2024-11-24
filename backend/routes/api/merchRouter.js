@@ -1,21 +1,57 @@
-// routes/api/merchRouter.js
-const express = require('express');
-const Merchandise = require('../../models/Merchandise'); // Updated path to reflect new model name
-const router = express.Router();
+const router = require("express").Router();
+const Merchandise = require("../../models/Merchandise");
+const User = require("../../models/User");  // Assuming the User model is located here
 
-// POST endpoint to create merchandise
-router.post('/', async (req, res) => {
-    const { name, description, price, imageUrl, sellerId } = req.body;
+router.post("/addMerch", (req, res) => {
+    // Destructure required fields from req.body
+    const { name, description, price, imageUrl, category, userId } = req.body;
 
-    try {
-        const newMerch = new Merchandise({ name, description, price, imageUrl, seller: sellerId });
-        await newMerch.save();
-        res.status(201).json(newMerch);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    // Check if any required fields are missing
+    if (!name || !description || !price || !imageUrl || !category || !userId) {
+        return res.status(400).json({ status: "notok", msg: "Please enter all required data" });
     }
-});
 
-// Additional routes can be added here
+    // Fetch the user details to get the email and phone number
+    User.findById(userId)
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({ status: "notok", msg: "User not found" });
+            }
+
+            // Create a new merchandise instance
+            const newMerch = new Merchandise({
+                name,
+                description,
+                price,
+                imageUrl,
+                category,
+                user: userId
+            });
+
+            // Save the merchandise to the database
+            newMerch.save()
+                .then((merch) => {
+                    return res.status(200).json({
+                        status: "ok",
+                        msg: "Merchandise added successfully",
+                        merch,
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                    return res.status(500).json({
+                        status: "error",
+                        msg: "Internal server error",
+                    });
+                });
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({
+                status: "error",
+                msg: "Error fetching user details",
+            });
+        });
+});
 
 module.exports = router;

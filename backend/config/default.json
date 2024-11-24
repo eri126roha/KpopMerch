@@ -1,5 +1,5 @@
 {
-    "mongo_url": "mongodb://127.0.0.1:27017/authlogin",
+    "mongo_url": "mongodb://127.0.0.1:27017/plateformeCont",
 
     "jwtSecret": "jwtSecret",
     "tokenExpire":"2592000"

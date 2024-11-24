@@ -6,14 +6,16 @@ import { ListusersComponent } from './listusers/listusers.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './home/home.component';
+import { AddMerchComponent } from './add-merch/add-merch.component';
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent },
+  { path: 'login-user', component: LoginComponent },
   { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'listusers', component: ListusersComponent},
   {path:'users/update/:id', component: UpdateUserComponent},
-  {path:'home', component: HomeComponent, canActivate:[AuthGuard]}
+  {path:'home', component: HomeComponent, canActivate:[AuthGuard]},
+  { path: 'addMerch', component: AddMerchComponent,canActivate:[AuthGuard] }
 
 
 ];

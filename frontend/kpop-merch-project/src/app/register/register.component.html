@@ -3,13 +3,21 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            Inscription
+            Register
           </div>
           <div class="card-body">
             <form (ngSubmit)="register()" #registerForm="ngForm">
               <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" [(ngModel)]="user.username" required>
+                <label for="profilePicture">Profile Picture:</label>
+                <input type="file" class="form-control" id="profilePicture" name="profilePicture" (change)="onFileChange($event)" required>
+              </div>
+              <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" [(ngModel)]="user.firstname" required>
+              </div>
+              <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" [(ngModel)]="user.lastname" required>
               </div>
               <div class="form-group">
                 <label for="email">Email:</label>
@@ -20,9 +28,10 @@
                 <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" required>
               </div>
               <div class="form-group">
-                <label for="role">Role:</label>
-                <input type="text" class="form-control" id="role" name="role" [(ngModel)]="user.role">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
               </div>
+             
               <button class="btn btn-primary" >Register</button>
             </form>
   
